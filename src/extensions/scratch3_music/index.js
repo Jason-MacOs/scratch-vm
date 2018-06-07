@@ -623,7 +623,7 @@ class Scratch3MusicBlocks {
     getInfo () {
         return {
             id: 'music',
-            name: 'Music',
+            name: '音乐',
             menuIconURI: menuIconURI,
             blockIconURI: blockIconURI,
             blocks: [

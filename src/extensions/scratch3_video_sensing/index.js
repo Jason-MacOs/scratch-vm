@@ -372,7 +372,7 @@ class Scratch3VideoSensingBlocks {
         // Return extension definition
         return {
             id: 'videoSensing',
-            name: 'Video Motion',
+            name: '视频传感',
             blocks: [
                 {
                     // @todo this hat needs to be set itself to restart existing

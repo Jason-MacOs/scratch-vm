@@ -282,7 +282,7 @@ class Scratch3PenBlocks {
     getInfo () {
         return {
             id: 'pen',
-            name: 'Pen',
+            name: '画笔',
             blockIconURI: blockIconURI,
             blocks: [
                 {
