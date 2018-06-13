@@ -129,7 +129,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'startArduino',
                     text: formatMessage({
-                        id: 'arduino.block.startArduino',
+                        id: 'arduino.startArduino',
                         default: 'Arduino Program',
                         description: 'Start run arduino program'
                     }),
@@ -140,7 +140,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'setVarTypeAs',
                     text: formatMessage({
-                        id: 'arduino.block.setVarType',
+                        id: 'arduino.setVarType',
                         default: 'Set variable [VARIABLE] as type [TYPE]',
                         description: 'Set variable type'
                     }),
@@ -149,7 +149,7 @@ class Scratch3ArduinoBlocks {
                         VARIABLE: {
                             type: ArgumentType.STRING,
                             defaultValue: formatMessage({
-                                id: 'arduino.block.defaultVariableName',
+                                id: 'arduino.defaultVariableName',
                                 default: 'var1',
                                 description: 'Variable name'
                             })
@@ -165,7 +165,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'readDigital',
                     text: formatMessage({
-                        id: 'arduino.block.readDigital',
+                        id: 'arduino.readDigital',
                         default: 'Read digital pin [DIGITAL]',
                         description: 'Read digital from Pin'
                     }),
@@ -180,7 +180,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'readAnalog',
                     text: formatMessage({
-                        id: 'arduino.block.readAnalog',
+                        id: 'arduino.readAnalog',
                         default: 'Read analog pin [ANALOG]',
                         description: 'Read analog from Pin.'
                     }),
@@ -195,7 +195,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'setDigitalPinOutput',
                     text: formatMessage({
-                        id: 'arduino.block.setDigitalPinOutput',
+                        id: 'arduino.setDigitalPinOutput',
                         default: 'Set digital pin [PIN] output as [OUTPUT]',
                         description: 'Set digital pin as output.'
                     }),
@@ -215,7 +215,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'setPwmPinOutput',
                     text: formatMessage({
-                        id: 'arduino.block.setPwmPinOutput',
+                        id: 'arduino.setPwmPinOutput',
                         default: 'Set PWM pin [PIN] output as [OUTPUT]',
                         description: 'Set PWM pin as output.'
                     }),
@@ -235,7 +235,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'playTonePin',
                     text: formatMessage({
-                        id: 'arduino.block.playTonePin',
+                        id: 'arduino.playTonePin',
                         default: 'Play tone pin [PIN] on note [NOTE] beat [BEAT]',
                         description: 'Play tone pin.'
                     }),
@@ -260,7 +260,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'setServoPinAngle',
                     text: formatMessage({
-                        id: 'arduino.block.setServoPinAngle',
+                        id: 'arduino.setServoPinAngle',
                         default: 'Set servo pin [PIN] angle as [ANGLE]',
                         description: 'Set servo pin angle.'
                     }),
@@ -279,7 +279,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'writeTextToSerial',
                     text: formatMessage({
-                        id: 'arduino.block.writeTextToSerial',
+                        id: 'arduino.writeTextToSerial',
                         default: 'Write text [TEXT] to serial',
                         description: 'Write text to serial.'
                     }),
@@ -294,7 +294,7 @@ class Scratch3ArduinoBlocks {
                 {
                     opcode: 'readUltrasonic',
                     text: formatMessage({
-                        id: 'arduino.block.readUltrasonic',
+                        id: 'arduino.readUltrasonic',
                         default: 'Read Ultrasonic sensor trig pin [TRIG] echo pin [ECHO]',
                         description: 'Read ultrasonic sensor trig pin .'
                     }),
