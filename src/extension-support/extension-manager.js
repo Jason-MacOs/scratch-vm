@@ -15,8 +15,10 @@ const Scratch3SpeakBlocks = require('../extensions/scratch3_speak');
 const Scratch3TranslateBlocks = require('../extensions/scratch3_translate');
 const Scratch3VideoSensingBlocks = require('../extensions/scratch3_video_sensing');
 const Scratch3SpeechBlocks = require('../extensions/scratch3_speech');
+const Scratch3ArduinoBlocks = require('../extensions/scratch3_arduino');
 
 const builtinExtensions = {
+    arduino: Scratch3ArduinoBlocks,
     pen: Scratch3PenBlocks,
     wedo2: Scratch3WeDo2Blocks,
     music: Scratch3MusicBlocks,
