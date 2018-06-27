@@ -506,8 +506,12 @@ class Runtime extends EventEmitter {
             menus: []
         };
 
-        this._blockInfo.push(categoryInfo);
-
+        // clear other extensions in _blockInfo when arduino added
+        if (categoryInfo.id == 'arduino') {
+            this._blockInfo = [categoryInfo];
+        } else {
+            this._blockInfo.push(categoryInfo);
+        }
         this._fillExtensionCategory(categoryInfo, extensionInfo);
 
         this.emit(Runtime.EXTENSION_ADDED, categoryInfo.blocks.concat(categoryInfo.menus));
