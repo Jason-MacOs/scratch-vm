@@ -106,11 +106,11 @@ class Scratch3ArduinoBlocks {
 
     static get BEAT() {
         return {
-            DOUBLE: { text: '2 beats', value: 2000 },
-            FULL: { text: '1 beat', value: 1000 },
-            HALF: { text: '1/2 beat', value: 500 },
-            QUARTER: { text: '1/4 beat', value: 250 },
-            EIGHTH: { text: '1/8 beat', value: 125 }
+            DOUBLE: { text: '2', value: 2000 },
+            FULL: { text: '1', value: 1000 },
+            HALF: { text: '1/2', value: 500 },
+            QUARTER: { text: '1/4', value: 250 },
+            EIGHTH: { text: '1/8', value: 125 }
         }
     }
 
@@ -179,7 +179,7 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         DIGITAL: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 1
+                            defaultValue: 9
                         }
                     }
                 },
@@ -187,14 +187,14 @@ class Scratch3ArduinoBlocks {
                     opcode: 'readAnalog',
                     text: formatMessage({
                         id: 'arduino.readAnalog',
-                        default: 'Read analog pin [ANALOG]',
+                        default: 'Read analog pin(A) [ANALOG]',
                         description: 'Read analog from Pin.'
                     }),
                     blockType: BlockType.REPORTER,
                     arguments: {
                         ANALOG: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 1
+                            defaultValue: 0
                         }
                     }
                 },
@@ -209,7 +209,7 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 1
+                            defaultValue: 9
                         },
                         OUTPUT: {
                             type: ArgumentType.STRING,
@@ -229,12 +229,14 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 1
+                            defaultValue: 5
                         },
                         OUTPUT: {
                             type: ArgumentType.NUMBER,
-                            menu: 'pwmOutputs',
-                            defaultValue: 0
+                            //menu: 'pwmOutputs',
+                            defaultValue: 0,
+                            minValue: 0,
+                            maximum: 255
                         }
                     }
                 },
@@ -249,7 +251,7 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 1
+                            defaultValue: 9
                         },
                         NOTE: {
                             type: ArgumentType.STRING,
@@ -274,7 +276,7 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 1
+                            defaultValue: 9
                         },
                         ANGLE: {
                             type: ArgumentType.ANGLE,
@@ -320,7 +322,7 @@ class Scratch3ArduinoBlocks {
             menus: {
                 types: this._variables,
                 digitalOutputs: this._digitalOutputs,
-                pwmOutputs: this._pwmOutputs,
+                //pwmOutputs: this._pwmOutputs,
                 notes: this._notes,
                 beats: this._beats
             }
