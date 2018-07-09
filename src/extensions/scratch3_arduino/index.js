@@ -199,9 +199,9 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'setDigitalPinOutput',
+                    opcode: 'setDigitalOutput',
                     text: formatMessage({
-                        id: 'arduino.setDigitalPinOutput',
+                        id: 'arduino.setDigitalOutput',
                         default: 'Set digital pin [PIN] output as [OUTPUT]',
                         description: 'Set digital pin as output.'
                     }),
@@ -219,9 +219,9 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'setPwmPinOutput',
+                    opcode: 'setPwmOutput',
                     text: formatMessage({
-                        id: 'arduino.setPwmPinOutput',
+                        id: 'arduino.setPwmOutput',
                         default: 'Set PWM pin [PIN] output as [OUTPUT]',
                         description: 'Set PWM pin as output.'
                     }),
@@ -241,9 +241,64 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'playTonePin',
+                    opcode: 'setPlaySpeed',
                     text: formatMessage({
-                        id: 'arduino.playTonePin',
+                        id: 'arduino.setPlaySpeed',
+                        default: 'Set play speed [BPM] beats',
+                        description: 'Set play speed to XX beats per minute.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        BPM: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 60
+                        }
+                    }
+                },
+                {
+                    opcode: 'rest',
+                    text: formatMessage({
+                        id: 'arduino.rest',
+                        default: 'Rest for [BEAT] beats',
+                        description: 'Rest for XX beats.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        BEAT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0.25
+                        }
+                    }
+                },
+                {
+                    opcode: 'playToneTillEnd',
+                    text: formatMessage({
+                        id: 'arduino.playToneTillEnd',
+                        default: 'Play tone pin [PIN] on note [NOTE] beat [BEAT] till end',
+                        description: 'Play tone pin till end.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 9
+                        },
+                        NOTE: {
+                            type: ArgumentType.STRING,
+                            menu: 'notes',
+                            defaultValue: Scratch3ArduinoBlocks.NOTE.C4
+                        },
+                        BEAT: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'beats',
+                            defaultValue: 500
+                        }
+                    }
+                },
+                {
+                    opcode: 'playTone',
+                    text: formatMessage({
+                        id: 'arduino.playTone',
                         default: 'Play tone pin [PIN] on note [NOTE] beat [BEAT]',
                         description: 'Play tone pin.'
                     }),
@@ -266,9 +321,9 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'setServoPinAngle',
+                    opcode: 'setServoAngle',
                     text: formatMessage({
-                        id: 'arduino.setServoPinAngle',
+                        id: 'arduino.setServoAngle',
                         default: 'Set servo pin [PIN] angle as [ANGLE]',
                         description: 'Set servo pin angle.'
                     }),
@@ -317,6 +372,79 @@ class Scratch3ArduinoBlocks {
                             defaultValue: ''
                         }
                     }
+                },
+                {
+                    opcode: 'readTemperature',
+                    text: formatMessage({
+                        id: 'arduino.readTemperature',
+                        default: 'Read temperature from pin [DAT]',
+                        description: 'Read temperature from pin.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: {
+                        DAT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 9
+                        }
+                    }
+                },
+                {
+                    opcode: 'readTime',
+                    text: formatMessage({
+                        id: 'arduino.readTime',
+                        default: 'Read time now',
+                        description: 'Read current time.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: { }
+                },
+                {
+                    opcode: 'setTime',
+                    text: formatMessage({
+                        id: 'arduino.setTime',
+                        default: 'Set time now',
+                        description: 'Set current time.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: { }
+                },
+                {
+                    opcode: 'set4DigitalTube',
+                    text:formatMessage({
+                        id: 'arduino.set4DigitalTube',
+                        default: 'Set tube CLK[CLK] DIO[DIO] display time [TIME]',
+                        description: 'Set tube display time XX:XX.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        CLK: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: ''
+                        },
+                        DIO: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: ''
+                        },
+                        TIME: {
+                            type: ArgumentType.STRING,
+                            defaultValue: '00:00'
+                        }
+                    }
+                },
+                {
+                    opcode: 'readGestureSensor',
+                    text: formatMessage({
+                        id: 'arduino.readGestureSensor',
+                        default: 'Read direction gesture sensor on pin [PIN]',
+                        description: 'Read direction from gesture sensor.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: { 
+                        PIN: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 9
+                        }
+                    }
                 }
             ],
             menus: {
@@ -348,22 +476,46 @@ class Scratch3ArduinoBlocks {
     readAnalog(args) {
     }
 
-    setDigitalPinOutput(args) {
+    setDigitalOutput(args) {
     }
 
-    setPwmPinOutput(args) {
+    setPwmOutput(args) {
     }
 
-    playTonePin(args) {
+    setPlaySpeed(args) {
     }
 
-    setServoPinAngle(args) {
+    rest(args) {
+    }
+
+    playToneTillEnd(args) {
+    }
+
+    playTone(args) {
+    }
+
+    setServoAngle(args) {
     }
 
     writeTextToSerial(args) {
     }
 
     readUltrasonic(args) {
+    }
+
+    readTemperature(args) {
+    }
+
+    readTime(args) {
+    }
+
+    setTime(args) {
+    }
+
+    set4DigitalTube(args) {
+    }
+
+    readGestureSensor(args) {
     }
 }
 module.exports = Scratch3ArduinoBlocks;
