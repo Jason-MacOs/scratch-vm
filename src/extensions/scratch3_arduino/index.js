@@ -139,12 +139,36 @@ class Scratch3ArduinoBlocks {
                         default: 'Arduino Program',
                         description: 'Start run arduino program'
                     }),
-                    blockType: BlockType.HAT,
-                    arguments: {}
+                    blockType: BlockType.EVENT,
+                    arguments: { }
+                },
+                {
+                    opcode: 'setupArduino',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.setupArduino',
+                        default: 'setup()',
+                        description: 'setup function of Arduino'
+                    }),
+                    blockType: BlockType.CONDITIONAL,
+                    arguments: { }
+                },
+                {
+                    opcode: 'loopArduino',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.loopArduino',
+                        default: 'loop()',
+                        description: 'Loop function of Arduino'
+                    }),
+                    blockType: BlockType.LOOP,
+                    isTerminal: true,
+                    arguments: { }
                 },
                 /*
                 {
                     opcode: 'setVarTypeAs',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.setVarType',
                         default: 'Set variable [VARIABLE] as type [TYPE]',
@@ -170,6 +194,7 @@ class Scratch3ArduinoBlocks {
                 */
                 {
                     opcode: 'readDigital',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.readDigital',
                         default: 'Read digital pin [DIGITAL]',
@@ -185,6 +210,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'readAnalog',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.readAnalog',
                         default: 'Read analog pin(A) [ANALOG]',
@@ -200,6 +226,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'setDigitalOutput',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.setDigitalOutput',
                         default: 'Set digital pin [PIN] output as [OUTPUT]',
@@ -220,6 +247,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'setPwmOutput',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.setPwmOutput',
                         default: 'Set PWM pin [PIN] output as [OUTPUT]',
@@ -242,6 +270,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'setPlaySpeed',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.setPlaySpeed',
                         default: 'Set play speed [BPM] beats',
@@ -257,6 +286,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'rest',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.rest',
                         default: 'Rest for [BEAT] beats',
@@ -272,6 +302,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'playToneTillEnd',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.playToneTillEnd',
                         default: 'Play tone pin [PIN] on note [NOTE] beat [BEAT] till end',
@@ -297,6 +328,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'playTone',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.playTone',
                         default: 'Play tone pin [PIN] on note [NOTE] beat [BEAT]',
@@ -322,6 +354,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'setServoAngle',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.setServoAngle',
                         default: 'Set servo pin [PIN] angle as [ANGLE]',
@@ -341,6 +374,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'writeTextToSerial',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.writeTextToSerial',
                         default: 'Write text [TEXT] to serial',
@@ -356,6 +390,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'readUltrasonic',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.readUltrasonic',
                         default: 'Read Ultrasonic sensor trig pin [TRIG] echo pin [ECHO]',
@@ -375,6 +410,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'readTemperature',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.readTemperature',
                         default: 'Read temperature from pin [DAT]',
@@ -390,6 +426,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'readTime',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.readTime',
                         default: 'Read time now',
@@ -400,6 +437,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'setTime',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.setTime',
                         default: 'Set time now',
@@ -410,6 +448,7 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'set4DigitalTube',
+                    func: 'idle',
                     text:formatMessage({
                         id: 'arduino.set4DigitalTube',
                         default: 'Set tube CLK[CLK] DIO[DIO] display time [TIME]',
@@ -433,9 +472,10 @@ class Scratch3ArduinoBlocks {
                 },
                 {
                     opcode: 'readGestureSensor',
+                    func: 'idle',
                     text: formatMessage({
                         id: 'arduino.readGestureSensor',
-                        default: 'Read direction gesture sensor on pin [PIN]',
+                        default: 'Read direction gesture sensor on pin INT[PIN]',
                         description: 'Read direction from gesture sensor.'
                     }),
                     blockType: BlockType.REPORTER,
@@ -457,65 +497,7 @@ class Scratch3ArduinoBlocks {
         };
     }
 
-    /**
-     * Run Arduino 
-     * @param {object} args - the block arguments.
-     * @return {boolean} - true if the button is pressed.
-     */
-    startArduino (args) {
-        //console.debug(args);
-    }
-
-    setVarTypeAs(args) {
-        console.debug(args);
-    }
-
-    readDigital(args) {
-    }
-
-    readAnalog(args) {
-    }
-
-    setDigitalOutput(args) {
-    }
-
-    setPwmOutput(args) {
-    }
-
-    setPlaySpeed(args) {
-    }
-
-    rest(args) {
-    }
-
-    playToneTillEnd(args) {
-    }
-
-    playTone(args) {
-    }
-
-    setServoAngle(args) {
-    }
-
-    writeTextToSerial(args) {
-    }
-
-    readUltrasonic(args) {
-    }
-
-    readTemperature(args) {
-    }
-
-    readTime(args) {
-    }
-
-    setTime(args) {
-    }
-
-    set4DigitalTube(args) {
-    }
-
-    readGestureSensor(args) {
+    idle() {
     }
 }
 module.exports = Scratch3ArduinoBlocks;
