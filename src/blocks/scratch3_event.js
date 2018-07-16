@@ -69,9 +69,11 @@ class Scratch3EventBlocks {
     hatGreaterThanPredicate (args, util) {
         const option = Cast.toString(args.WHENGREATERTHANMENU).toLowerCase();
         const value = Cast.toNumber(args.VALUE);
-        // @todo: Other cases :)
-        if (option === 'timer') {
+        switch (option) {
+        case 'timer':
             return util.ioQuery('clock', 'projectTimer') > value;
+        case 'loudness':
+            return this.runtime.audioEngine && this.runtime.audioEngine.getLoudness() > value;
         }
         return false;
     }
@@ -109,7 +111,17 @@ class Scratch3EventBlocks {
             const instance = this;
             const waiting = util.stackFrame.startedThreads.some(thread => instance.runtime.isActiveThread(thread));
             if (waiting) {
-                util.yield();
+                // If all threads are waiting for the next tick or later yield
+                // for a tick as well. Otherwise yield until the next loop of
+                // the threads.
+                if (
+                    util.stackFrame.startedThreads
+                        .every(thread => instance.runtime.isWaitingThread(thread))
+                ) {
+                    util.yieldTick();
+                } else {
+                    util.yield();
+                }
             }
         }
     }

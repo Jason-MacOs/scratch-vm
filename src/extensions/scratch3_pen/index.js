@@ -282,7 +282,11 @@ class Scratch3PenBlocks {
     getInfo () {
         return {
             id: 'pen',
-            name: '画笔',
+            name: formatMessage({
+                id: 'pen.categoryName',
+                default: 'Pen',
+                description: 'Label for the pen extension category'
+            }),
             blockIconURI: blockIconURI,
             blocks: [
                 {
