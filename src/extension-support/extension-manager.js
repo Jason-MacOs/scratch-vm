@@ -17,10 +17,12 @@ const Scratch3VideoSensingBlocks = require('../extensions/scratch3_video_sensing
 const Scratch3SpeechBlocks = require('../extensions/scratch3_speech');
 const Scratch3ArduinoBlocks = require('../extensions/scratch3_arduino');
 const Scratch3LCDBlocks = require('../extensions/scratch3_lcd');
+const Scratch3MatrixBlocks = require('../extensions/scratch3_matrix');
 
 const builtinExtensions = {
     arduino: Scratch3ArduinoBlocks,
     lcd: Scratch3LCDBlocks,
+    matrix: Scratch3MatrixBlocks,
     pen: Scratch3PenBlocks,
     wedo2: Scratch3WeDo2Blocks,
     music: Scratch3MusicBlocks,

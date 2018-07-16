@@ -18,19 +18,14 @@ const menuIconURI = 'data:image/svg+xml;base64,PHN2ZyBpZD0i5Zu+5bGCXzEiIGRhdGEtb
  */
 class Scratch3ArduinoBlocks {
     constructor () {
-        this._variables = Object.entries(Scratch3ArduinoBlocks.VARIABLE_TYPE).map(
-            (item, index) => {
-                return { text: item[0], value: item[1] };
-            });
-
         this._digitalOutputs = Object.entries(Scratch3ArduinoBlocks.DIGITAL_OUTPUT).map(
             (item, index) => {
-                return { text: item[0], value: item[1] };
-            });
-
-        this._pwmOutputs = Object.entries(Scratch3ArduinoBlocks.PWM_OUTPUT).map(
-            (item, index) => {
-                return { text: item[0], value: item[1] };
+                let label = formatMessage({
+                    id: `arduino.digital.${item[0]}`,
+                    default: `${item[0]}`,
+                    description: 'Digital output(HIGH/LOW)'
+                });
+                return { text: label, value: item[1] };
             });
 
         this._notes = Object.entries(Scratch3ArduinoBlocks.NOTE).map(
@@ -40,36 +35,80 @@ class Scratch3ArduinoBlocks {
 
         this._beats = Object.entries(Scratch3ArduinoBlocks.BEAT).map(
             (item, index) => {
-                return item[1];
+                let label = formatMessage({
+                    id: `arduino.beat.${item[0]}`,
+                    default: `${item[0]}`,
+                    description: 'Beats'
+                });
+                return { text: label, value: item[1] };
+            });
+
+        this._motors = Object.entries({'first': 1, 'second': 2}).map(
+            (item, index) => {
+                let label = formatMessage({
+                    id: `arduino.motor.${item[0]}`,
+                    default: `${item[0]}`,
+                    description: 'Motor index'
+                });
+                return { text: label, value: item[1] };
+            });
+
+        this._digitalPins = Object.entries(Scratch3ArduinoBlocks.DIGITAL_PIN).map(
+            (item, index) => {
+                return { text: item[0], value: item[1] };
+            });
+
+        this._analogPins = Object.entries(Scratch3ArduinoBlocks.ANALOG_PIN).map(
+            (item, index) => {
+                return { text: item[0], value: item[1] };
+            });
+
+        this._pwmPins = Object.entries(Scratch3ArduinoBlocks.PWM_PIN).map(
+            (item, index) => {
+                return { text: item[0].split('_').pop()/*remove PWM_*/, value: item[1] };
+            });
+
+        this._println = Object.entries(Scratch3ArduinoBlocks.CHOICE).map(
+            (item, index) => {
+                let label = formatMessage({
+                    id: `arduino.println.${item[0]}`,
+                    default: `${item[0]}`,
+                    description: 'Auto new line.'
+                });
+                return { text: label, value: item[1] };
+            });
+
+        this._months = Object.entries(Scratch3ArduinoBlocks.MONTH).map(
+            (item, index) => {
+                let label = formatMessage({
+                    id: `arduino.month.${item[0]}`,
+                    default: `${item[0]}`,
+                    description: 'Month.'
+                });
+                return { text: label, value: item[1] };
+            });
+
+        this._rtc = Object.entries(Scratch3ArduinoBlocks.RTC).map(
+            (item, index) => {
+                let label = formatMessage({
+                    id: `arduino.rtc.${item[0]}`,
+                    default: `${item[0]}`,
+                    description: 'RTC unit.'
+                });
+                return { text: label, value: item[1] };
+            });
+
+        this._types = Object.entries(Scratch3ArduinoBlocks.TYPE).map(
+            (item, index) => {
+                let label = formatMessage({
+                    id: `arduino.types.${item[0]}`,
+                    default: `${item[0]}`,
+                    description: 'Variable type.'
+                });
+                return { text: label, value: item[1] };
             });
     }
 
-    /**
-     * Types of variables.
-     * @type {Array.<object.<string, string>>}
-     * @return [Array] Variable types.
-     */
-    static get VARIABLE_TYPE() { 
-        return {
-            /** Type: double **/
-            DOUBLE: 'double',
-
-            /** Type: int **/
-            INT: 'int',
-
-            /** Type: int* **/
-            INT_POINTER: 'int*',
-
-            /** Type: char **/
-            CHAR: 'char',
-
-            /** Type: char* **/
-            CHAR_POINTER: 'char*',
-
-            /** Type: String **/
-            STRING: 'String'
-        };
-    }
     /**
      * Output of digital pin.
      * @type {Array.<object.<string, int>>}
@@ -77,26 +116,11 @@ class Scratch3ArduinoBlocks {
      */
     static get DIGITAL_OUTPUT() {
         return {
-            /** Output: HIGH **/
-            HIGH: 1,
+            /** Digital output: HIGH **/
+            'HIGH': 1,
 
-            /** Output: LOW **/
-            LOW: 0
-        };
-    }
-
-    /**
-     * Output of PWM pin.
-     * @type {Array.<object.<string, int>>}
-     * @return [Array] Outputs.
-     */
-    static get PWM_OUTPUT() {
-        return {
-            '0': 0,
-            '50': 50,
-            '100': 100,
-            '150': 150,
-            '255': 255
+            /** Digital output: LOW **/
+            'LOW': 0
         };
     }
 
@@ -106,12 +130,105 @@ class Scratch3ArduinoBlocks {
 
     static get BEAT() {
         return {
-            DOUBLE: { text: '2', value: 2000 },
-            FULL: { text: '1', value: 1000 },
-            HALF: { text: '1/2', value: 500 },
-            QUARTER: { text: '1/4', value: 250 },
-            EIGHTH: { text: '1/8', value: 125 }
+            DOUBLE: 2,
+            FULL: 1,
+            HALF: 1 / 2,
+            QUARTER: 1 / 4,
+            EIGHTH: 1 / 8,
+            ZERO: 0
+        };
+    }
+
+    static get DIGITAL_PIN() {
+        return {
+            D0: 0,
+            D1: 1,
+            D2: 2,
+            D3: 3,
+            D4: 4,
+            D5: 5,
+            D6: 6,
+            D7: 7,
+            D8: 8,
+            D9: 9,
+            D10: 10,
+            D11: 11,
+            D12: 12,
+            D13: 13,
+            D14: 14,
+            D15: 15,
+            D16: 16,
+            D17: 17,
+            D18: 18,
+            D19: 19
+        };
+    }
+
+    static get ANALOG_PIN() {
+        return {
+            A0: 14,
+            A1: 15,
+            A2: 16,
+            A3: 17,
+            A4: 18,
+            A5: 19
+        };
+    }
+
+    static get PWM_PIN() {
+        return {
+            PWM_3: 3,
+            PWM_5: 5,
+            PWM_6: 6,
+            PWM_9: 9,
+            PWM_10: 10,
+            PWM_11: 11
+        };
+    }
+
+    static get CHOICE() {
+        return {
+            YES: 1,
+            NO: 0
         }
+    }
+
+    static get MONTH() {
+        return {
+            'Jan.': 0,
+            'Feb.': 1,
+            'Mar.': 2,
+            'Apr.': 3,
+            'May.': 4,
+            'Jun.': 5,
+            'Jul.': 6,
+            'Aug.': 7,
+            'Sep.': 8,
+            'Oct.': 9,
+            'Nov.': 10,
+            'Dec.': 11
+        };
+    }
+
+    static get RTC() {
+        return {
+            'YEAR': 'year',
+            'MONTH': 'month',
+            'DATE': 'date',
+            'HOUR': 'hour',
+            'MINUTE': 'minute'
+        };
+    }
+
+    static get TYPE() {
+        return {
+            DOUBLE: 'double',
+            INT: 'int',
+            POINTER_INT: 'int*',
+            CHAR: 'char',
+            POINTER_CHAR: 'char*',
+            STRING: 'String'
+        };
     }
 
     /**
@@ -126,6 +243,7 @@ class Scratch3ArduinoBlocks {
      * @returns {object} metadata for this extension and its blocks.
      */
     getInfo () {
+        const NOW = new Date();
         return {
             id: 'arduino',
             name: 'Arduino',
@@ -133,65 +251,60 @@ class Scratch3ArduinoBlocks {
             blockIconURI: blockIconURI,
             blocks: [
                 {
-                    opcode: 'startArduino',
+                    opcode: 'start',
+                    func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.startArduino',
-                        default: 'Arduino Program',
+                        id: 'arduino.start',
+                        default: 'Arduino',
                         description: 'Start run arduino program'
                     }),
-                    blockType: BlockType.EVENT,
+                    blockType: BlockType.HAT,
                     arguments: { }
                 },
                 {
-                    opcode: 'setupArduino',
+                    opcode: 'setup',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.setupArduino',
-                        default: 'setup()',
+                        id: 'arduino.setup',
+                        default: 'Initialize',
                         description: 'setup function of Arduino'
                     }),
                     blockType: BlockType.CONDITIONAL,
                     arguments: { }
                 },
                 {
-                    opcode: 'loopArduino',
+                    opcode: 'loop',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.loopArduino',
-                        default: 'loop()',
+                        id: 'arduino.loop',
+                        default: 'Loop',
                         description: 'Loop function of Arduino'
                     }),
                     blockType: BlockType.LOOP,
                     isTerminal: true,
                     arguments: { }
                 },
-                /*
                 {
-                    opcode: 'setVarTypeAs',
+                    opcode: 'setVariableType',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.setVarType',
-                        default: 'Set variable [VARIABLE] as type [TYPE]',
-                        description: 'Set variable type'
+                        id: 'arduino.setVariableType',
+                        default: 'Set variable[VARIABLE] type [TYPE]',
+                        description: 'Set variable type.'
                     }),
                     blockType: BlockType.COMMAND,
                     arguments: {
                         VARIABLE: {
                             type: ArgumentType.STRING,
-                            defaultValue: formatMessage({
-                                id: 'arduino.defaultVariableName',
-                                default: 'var1',
-                                description: 'Variable name'
-                            })
+                            defaultValue: ''
                         },
                         TYPE: {
                             type: ArgumentType.STRING,
                             menu: 'types',
-                            defaultValue: Scratch3ArduinoBlocks.VARIABLE_TYPE.INT
+                            defaultValue: Scratch3ArduinoBlocks.TYPE.INT
                         }
                     }
                 },
-                */
                 {
                     opcode: 'readDigital',
                     func: 'idle',
@@ -204,7 +317,8 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         DIGITAL: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 9
+                            //menu: 'digitalPins',
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D9
                         }
                     }
                 },
@@ -220,15 +334,16 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         ANALOG: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 0
+                            menu: 'analogPins',
+                            defaultValue: Scratch3ArduinoBlocks.ANALOG_PIN.A0
                         }
                     }
                 },
                 {
-                    opcode: 'setDigitalOutput',
+                    opcode: 'writeDigital',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.setDigitalOutput',
+                        id: 'arduino.writeDigital',
                         default: 'Set digital pin [PIN] output as [OUTPUT]',
                         description: 'Set digital pin as output.'
                     }),
@@ -236,7 +351,8 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 9
+                            //menu: 'digitalPins',
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D9
                         },
                         OUTPUT: {
                             type: ArgumentType.STRING,
@@ -246,33 +362,31 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'setPwmOutput',
+                    opcode: 'writePwm',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.setPwmOutput',
-                        default: 'Set PWM pin [PIN] output as [OUTPUT]',
-                        description: 'Set PWM pin as output.'
+                        id: 'arduino.writePwm',
+                        default: 'Write PWM pin [PIN] output as [OUTPUT]',
+                        description: 'Write PWM pin as output.'
                     }),
                     blockType: BlockType.COMMAND,
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 5
+                            menu: 'pwmPins',
+                            defaultValue: Scratch3ArduinoBlocks.PWM_PIN.PWM_5
                         },
                         OUTPUT: {
                             type: ArgumentType.NUMBER,
-                            //menu: 'pwmOutputs',
-                            defaultValue: 0,
-                            minValue: 0,
-                            maximum: 255
+                            defaultValue: 0
                         }
                     }
                 },
                 {
-                    opcode: 'setPlaySpeed',
+                    opcode: 'setSpeed',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.setPlaySpeed',
+                        id: 'arduino.setSpeed',
                         default: 'Set play speed [BPM] beats',
                         description: 'Set play speed to XX beats per minute.'
                     }),
@@ -285,26 +399,10 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'rest',
+                    opcode: 'playAndWait',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.rest',
-                        default: 'Rest for [BEAT] beats',
-                        description: 'Rest for XX beats.'
-                    }),
-                    blockType: BlockType.COMMAND,
-                    arguments: {
-                        BEAT: {
-                            type: ArgumentType.NUMBER,
-                            defaultValue: 0.25
-                        }
-                    }
-                },
-                {
-                    opcode: 'playToneTillEnd',
-                    func: 'idle',
-                    text: formatMessage({
-                        id: 'arduino.playToneTillEnd',
+                        id: 'arduino.playAndWait',
                         default: 'Play tone pin [PIN] on note [NOTE] beat [BEAT] till end',
                         description: 'Play tone pin till end.'
                     }),
@@ -322,15 +420,15 @@ class Scratch3ArduinoBlocks {
                         BEAT: {
                             type: ArgumentType.NUMBER,
                             menu: 'beats',
-                            defaultValue: 500
+                            defaultValue: Scratch3ArduinoBlocks.BEAT.HALF
                         }
                     }
                 },
                 {
-                    opcode: 'playTone',
+                    opcode: 'play',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.playTone',
+                        id: 'arduino.play',
                         default: 'Play tone pin [PIN] on note [NOTE] beat [BEAT]',
                         description: 'Play tone pin.'
                     }),
@@ -348,7 +446,23 @@ class Scratch3ArduinoBlocks {
                         BEAT: {
                             type: ArgumentType.NUMBER,
                             menu: 'beats',
-                            defaultValue: 500
+                            defaultValue: Scratch3ArduinoBlocks.BEAT.HALF
+                        }
+                    }
+                },
+                {
+                    opcode: 'rest',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.rest',
+                        default: 'Rest for [BEAT] beats',
+                        description: 'Rest for XX beats.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        BEAT: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 0.25
                         }
                     }
                 },
@@ -373,11 +487,11 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'writeTextToSerial',
+                    opcode: 'println',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.writeTextToSerial',
-                        default: 'Write text [TEXT] to serial',
+                        id: 'arduino.println',
+                        default: 'Write text [TEXT] to serial [PRINTLN]',
                         description: 'Write text to serial.'
                     }),
                     blockType: BlockType.COMMAND,
@@ -385,6 +499,11 @@ class Scratch3ArduinoBlocks {
                         TEXT: {
                             type: ArgumentType.STRING,
                             defaultValue: 'hello'
+                        },
+                        PRINTLN: {
+                            type: ArgumentType.STRING,
+                            menu: 'println',
+                            defaultValue: Scratch3ArduinoBlocks.CHOICE.YES
                         }
                     }
                 },
@@ -420,53 +539,148 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         DAT: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 9
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D9
                         }
                     }
                 },
                 {
-                    opcode: 'readTime',
+                    opcode: 'readRTC',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.readTime',
-                        default: 'Read time now',
-                        description: 'Read current time.'
+                        id: 'arduino.readRTC',
+                        default: 'Read [RTC] from RTC',
+                        description: 'Read year/month/date/hour/minute from RTC.'
                     }),
                     blockType: BlockType.REPORTER,
-                    arguments: { }
+                    arguments: {
+                        RTC: {
+                            type: ArgumentType.NUMBER,
+                            menu: 'rtc',
+                            defaultValue: Scratch3ArduinoBlocks.RTC.YEAR
+                        }
+                    }
                 },
                 {
                     opcode: 'setTime',
                     func: 'idle',
                     text: formatMessage({
                         id: 'arduino.setTime',
+                        default: 'Set time with year[YEAR] month[MONTH] date[DATE] hour[HOUR] minute[MINUTE]',
+                        description: 'Set time with year month date hour minute.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        YEAR: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getFullYear()
+                        },
+                        MONTH: {
+                            type: ArgumentType.NUMBER,
+                            //menu: 'months',
+                            defaultValue: NOW.getMonth() + 1
+                        },
+                        DATE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getDate()
+                        },
+                        HOUR: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getHours()
+                        },
+                        MINUTE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getMinutes()
+                        }
+                    }
+                },
+                {
+                    opcode: 'setTimeNow',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.setTimeNow',
                         default: 'Set time now',
-                        description: 'Set current time.'
+                        description: 'Set time now.'
                     }),
                     blockType: BlockType.COMMAND,
                     arguments: { }
                 },
                 {
-                    opcode: 'set4DigitalTube',
+                    opcode: 'setTubeYear',
                     func: 'idle',
                     text:formatMessage({
-                        id: 'arduino.set4DigitalTube',
-                        default: 'Set tube CLK[CLK] DIO[DIO] display time [TIME]',
-                        description: 'Set tube display time XX:XX.'
+                        id: 'arduino.setTubeYear',
+                        default: 'Set tube CLK[CLK] DIO[DIO] display year [YEAR]',
+                        description: 'Set tube display year YYYY.'
                     }),
                     blockType: BlockType.COMMAND,
                     arguments: {
                         CLK: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: ''
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D7
                         },
                         DIO: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: ''
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D8
                         },
-                        TIME: {
+                        YEAR: {
                             type: ArgumentType.STRING,
-                            defaultValue: '00:00'
+                            defaultValue: NOW.getFullYear()
+                        }
+                    }
+                },
+                {
+                    opcode: 'setTubeDate',
+                    func: 'idle',
+                    text:formatMessage({
+                        id: 'arduino.setTubeDate',
+                        default: 'Set tube CLK[CLK] DIO[DIO] display month[MONTH] date[DATE]',
+                        description: 'Set tube display month and date MMDD.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        CLK: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D7
+                        },
+                        DIO: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D8
+                        },
+                        MONTH: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getMonth()
+                        },
+                        DATE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getDate()
+                        }
+                    }
+                },
+                {
+                    opcode: 'setTubeTime',
+                    func: 'idle',
+                    text:formatMessage({
+                        id: 'arduino.setTubeTime',
+                        default: 'Set tube CLK[CLK] DIO[DIO] display hour[HOUR] minute[MINUTE]',
+                        description: 'Set tube display time HH:mm.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        CLK: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D7
+                        },
+                        DIO: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D8
+                        },
+                        HOUR: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getHours()
+                        },
+                        MINUTE: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: NOW.getMinutes()
                         }
                     }
                 },
@@ -482,17 +696,91 @@ class Scratch3ArduinoBlocks {
                     arguments: { 
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 9
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D9
+                        }
+                    }
+                },
+                {
+                    opcode: 'setRemotePin',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.setRemotePin',
+                        default: 'Set remote pin[PIN]',
+                        description: 'Set remote pin.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        PIN: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D3
+                        }
+                    }
+                },
+                {
+                    opcode: 'readRemoteData',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.readRemoteData',
+                        default: 'Read remote',
+                        description: 'Set remote pin.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: { }
+                },
+                {
+                    opcode: 'setMotorSpeed',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.setMotorSpeed',
+                        default: 'Set motor[MOTOR] speed[SPEED]',
+                        description: 'Set motor speed.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        MOTOR: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 1,
+                            menu: 'motors'
+                        },
+                        SPEED: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 100
+                        }
+                    }
+                },
+                {
+                    opcode: 'set2MotorsSpeed',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.set2MotorsSpeed',
+                        default: 'Set motor1 speed[SPEED1] and motor2 speed[SPEED2]',
+                        description: 'Set motor speed.'
+                    }),
+                    blockType: BlockType.COMMAND,
+                    arguments: {
+                        SPEED1: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 100
+                        },
+                        SPEED2: {
+                            type: ArgumentType.NUMBER,
+                            defaultValue: 100
                         }
                     }
                 }
             ],
             menus: {
-                types: this._variables,
                 digitalOutputs: this._digitalOutputs,
-                //pwmOutputs: this._pwmOutputs,
+                motors: this._motors,
                 notes: this._notes,
-                beats: this._beats
+                digitalPins: this._digitalPins,
+                analogPins: this._analogPins,
+                pwmPins: this._pwmPins,
+                println: this._println,
+                months: this._months,
+                rtc: this._rtc,
+                beats: this._beats,
+                types: this._types
             }
         };
     }
