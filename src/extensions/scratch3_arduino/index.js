@@ -212,11 +212,11 @@ class Scratch3ArduinoBlocks {
 
     static get RTC() {
         return {
-            'YEAR': 'year',
-            'MONTH': 'month',
-            'DATE': 'date',
-            'HOUR': 'hour',
-            'MINUTE': 'minute'
+            'YEAR': 0,
+            'MONTH': 1,
+            'DATE': 2,
+            'HOUR': 3,
+            'MINUTE': 4
         };
     }
 
