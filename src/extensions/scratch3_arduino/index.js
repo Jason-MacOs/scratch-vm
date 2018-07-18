@@ -701,31 +701,20 @@ class Scratch3ArduinoBlocks {
                     }
                 },
                 {
-                    opcode: 'setRemotePin',
+                    opcode: 'readRemoteData',
                     func: 'idle',
                     text: formatMessage({
-                        id: 'arduino.setRemotePin',
-                        default: 'Set remote pin[PIN]',
+                        id: 'arduino.readRemoteData',
+                        default: 'Read remote from pin[PIN]',
                         description: 'Set remote pin.'
                     }),
-                    blockType: BlockType.COMMAND,
+                    blockType: BlockType.REPORTER,
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
                             defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D3
                         }
                     }
-                },
-                {
-                    opcode: 'readRemoteData',
-                    func: 'idle',
-                    text: formatMessage({
-                        id: 'arduino.readRemoteData',
-                        default: 'Read remote',
-                        description: 'Set remote pin.'
-                    }),
-                    blockType: BlockType.REPORTER,
-                    arguments: { }
                 },
                 {
                     opcode: 'setMotorSpeed',
