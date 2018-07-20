@@ -25,12 +25,12 @@ class Scratch3ArduinoBlocks {
                     default: `${item[0]}`,
                     description: 'Digital output(HIGH/LOW)'
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._notes = Object.entries(Scratch3ArduinoBlocks.NOTE).map(
             (item, index) => {
-                return { text: item[0], value: item[1] };
+                return { text: item[0], value: String(item[1]) };
             });
 
         this._beats = Object.entries(Scratch3ArduinoBlocks.BEAT).map(
@@ -40,7 +40,7 @@ class Scratch3ArduinoBlocks {
                     default: `${item[0]}`,
                     description: 'Beats'
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._motors = Object.entries({'first': 1, 'second': 2}).map(
@@ -50,22 +50,22 @@ class Scratch3ArduinoBlocks {
                     default: `${item[0]}`,
                     description: 'Motor index'
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._digitalPins = Object.entries(Scratch3ArduinoBlocks.DIGITAL_PIN).map(
             (item, index) => {
-                return { text: item[0], value: item[1] };
+                return { text: item[0], value: String(item[1]) };
             });
 
         this._analogPins = Object.entries(Scratch3ArduinoBlocks.ANALOG_PIN).map(
             (item, index) => {
-                return { text: item[0], value: item[1] };
+                return { text: item[0], value: String(item[1]) };
             });
 
         this._pwmPins = Object.entries(Scratch3ArduinoBlocks.PWM_PIN).map(
             (item, index) => {
-                return { text: item[0].split('_').pop()/*remove PWM_*/, value: item[1] };
+                return { text: item[0].split('_').pop()/*remove PWM_*/, value: String(item[1]) };
             });
 
         this._println = Object.entries(Scratch3ArduinoBlocks.CHOICE).map(
@@ -75,7 +75,7 @@ class Scratch3ArduinoBlocks {
                     default: `${item[0]}`,
                     description: 'Auto new line.'
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._months = Object.entries(Scratch3ArduinoBlocks.MONTH).map(
@@ -85,7 +85,7 @@ class Scratch3ArduinoBlocks {
                     default: `${item[0]}`,
                     description: 'Month.'
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._rtc = Object.entries(Scratch3ArduinoBlocks.RTC).map(
@@ -95,7 +95,7 @@ class Scratch3ArduinoBlocks {
                     default: `${item[0]}`,
                     description: 'RTC unit.'
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._types = Object.entries(Scratch3ArduinoBlocks.TYPE).map(
@@ -105,7 +105,7 @@ class Scratch3ArduinoBlocks {
                     default: `${item[0]}`,
                     description: 'Variable type.'
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
     }
 

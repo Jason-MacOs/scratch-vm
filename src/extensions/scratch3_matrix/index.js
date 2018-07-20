@@ -23,7 +23,7 @@ class Scratch3MatrixBlocks {
                     default: `${item[0]}`,
                     description: 'Directions(UP/DOWN/LEFT/RIGHT).',
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._brightness = Object.entries(Scratch3MatrixBlocks.BRIGHTNESS).map(
@@ -33,7 +33,7 @@ class Scratch3MatrixBlocks {
                     default: `${item[0]}`,
                     description: 'Brightness(QUARTER/HALF/FULL).',
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
     }
 

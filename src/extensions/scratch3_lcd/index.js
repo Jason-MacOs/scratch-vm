@@ -25,7 +25,7 @@ class Scratch3LCDBlocks {
                     default: item[0],
                     description: `Base: ${item[0]}`
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._visible = Object.entries(Scratch3LCDBlocks.VISIBLE).map(
@@ -35,7 +35,7 @@ class Scratch3LCDBlocks {
                     default: item[0],
                     description: ''
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._blink = Object.entries(Scratch3LCDBlocks.VISIBLE).map(
@@ -45,7 +45,7 @@ class Scratch3LCDBlocks {
                     default: item[0],
                     description: ''
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._display = Object.entries(Scratch3LCDBlocks.VISIBLE).map(
@@ -55,7 +55,7 @@ class Scratch3LCDBlocks {
                     default: item[0],
                     description: ''
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._enabled = Object.entries(Scratch3LCDBlocks.VISIBLE).map(
@@ -65,7 +65,7 @@ class Scratch3LCDBlocks {
                     default: item[0],
                     description: ''
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
 
         this._sides = Object.entries(Scratch3LCDBlocks.SIDES).map(
@@ -75,7 +75,7 @@ class Scratch3LCDBlocks {
                     default: item[0],
                     description: ''
                 });
-                return { text: label, value: item[1] };
+                return { text: label, value: String(item[1]) };
             });
     }
 
