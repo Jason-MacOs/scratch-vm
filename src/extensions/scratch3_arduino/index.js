@@ -5,24 +5,26 @@ const log = require('../../util/log');
 //const nets = require('nets');
 const formatMessage = require('format-message');
 const Note = require('./note');
-
+const vm = require('../../virtual-machine.js');
 // eslint-disable-next-line max-len
 const blockIconURI = 'data:image/svg+xml;base64,PHN2ZyBpZD0i5Zu+5bGCXzEiIGRhdGEtbmFtZT0i5Zu+5bGCIDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiB2aWV3Qm94PSIwIDAgNDAgNDAiPg0KICAgIDxkZWZzPg0KICAgICAgICA8c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT4NCiAgICA8L2RlZnM+DQogICAgPHRpdGxlPuWunumqjDwvdGl0bGU+DQogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzguNzIsMjBhOS4wOCw5LjA4LDAsMCwwLTkuMjItOC45LDguNDksOC40OSwwLDAsMC0xLjQyLjExYy0zLjk1LjU1LTYuNiwzLjQtOC4wOCw1LjU4LTEuNDgtMi4xOC00LjEzLTUtOC4wOC01LjU4YTkuNyw5LjcsMCwwLDAtMS40Mi0uMTFBOS4wNyw5LjA3LDAsMCwwLDEuMjgsMjBhOS4wOCw5LjA4LDAsMCwwLDkuMjIsOC45LDguNjksOC42OSwwLDAsMCwxLjQzLS4xMWM0LS41Nyw2LjYtMy40MSw4LjA4LTUuNTksMS40OCwyLjE4LDQuMTMsNSw4LjA4LDUuNTlhOS43Myw5LjczLDAsMCwwLDEuNDMuMTEsOS4wOCw5LjA4LDAsMCwwLDkuMi04LjlNMTEuNDcsMjUuNjhhNi40NSw2LjQ1LDAsMCwxLTEsLjA2QTUuOTEsNS45MSwwLDAsMSw0LjQzLDIwYTUuOTEsNS45MSwwLDAsMSw2LjA3LTUuNzQsOC4wNiw4LjA2LDAsMCwxLDEsLjA2YzMuNzMuNTQsNiw0LjIxLDYuNzgsNS42OC0uNzksMS40OC0zLjA4LDUuMTQtNi43OSw1LjY4TTIxLjc0LDIwYy43Ny0xLjQ3LDMuMDUtNS4xNCw2Ljc4LTUuNjhhOC4wNiw4LjA2LDAsMCwxLDEtLjA2QTUuOTEsNS45MSwwLDAsMSwzNS41NiwyMGE1LjkyLDUuOTIsMCwwLDEtNi4wNiw1Ljc0LDguMDYsOC4wNiwwLDAsMS0xLS4wNmMtMy43My0uNTQtNi00LjIxLTYuNzgtNS42OCIvPg0KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTgsMTkuMTNoNS41NHYxLjc4SDhabTIyLjE2LDEuNzlIMzJWMTkuMTNIMzAuMTFWMTcuMjZoLTEuOHYxLjg3SDI2LjQ0djEuNzloMS44N3YxLjg3aDEuOFoiLz4NCjwvc3ZnPg==';
 
 // eslint-disable-next-line max-len
 const menuIconURI = 'data:image/svg+xml;base64,PHN2ZyBpZD0i5Zu+5bGCXzEiIGRhdGEtbmFtZT0i5Zu+5bGCIDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiB2aWV3Qm94PSIwIDAgMjAgMjAiPg0KICAgIDxkZWZzPg0KICAgICAgICA8c3R5bGU+LmNscy0xe2ZpbGw6IzU3NWU3NTt9PC9zdHlsZT4NCiAgICA8L2RlZnM+DQogICAgPHRpdGxlPuWunumqjDI8L3RpdGxlPg0KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTE5LjU0LDEwLjEzQTQuNjIsNC42MiwwLDAsMCwxNC44NSw1LjZhNS44MSw1LjgxLDAsMCwwLS43Mi4wNUE2LjIxLDYuMjEsMCwwLDAsMTAsOC41LDYuMjEsNi4yMSwwLDAsMCw1LjkxLDUuNjVhNS44MSw1LjgxLDAsMCwwLS43Mi0uMDVBNC42MSw0LjYxLDAsMCwwLC41LDEwLjEzYTQuNjEsNC42MSwwLDAsMCw0LjY5LDQuNTMsNC41OSw0LjU5LDAsMCwwLC43My0uMDZBNi4yNiw2LjI2LDAsMCwwLDEwLDExLjc1YTYuMjEsNi4yMSwwLDAsMCw0LjExLDIuODUsNC4yOCw0LjI4LDAsMCwwLC43Mi4wNiw0LjYyLDQuNjIsMCwwLDAsNC42OC00LjUzTTUuNjgsMTNhNC4xOSw0LjE5LDAsMCwxLS41LDBBMywzLDAsMCwxLDIuMSwxMC4xMywzLDMsMCwwLDEsNS4xOSw3LjIxYTQsNCwwLDAsMSwuNDksMGMxLjkuMjcsMy4wNiwyLjE0LDMuNDUsMi44OS0uNC43NS0xLjU2LDIuNjItMy40NSwyLjg5bTUuMjItMi44OWMuMzktLjc1LDEuNTYtMi42MiwzLjQ1LTIuODlhNC4xOSw0LjE5LDAsMCwxLC41LDAsMywzLDAsMCwxLDMuMDksMi45MiwzLDMsMCwwLDEtMy4wOSwyLjkyLDQuMTksNC4xOSwwLDAsMS0uNSwwYy0xLjg5LS4yNy0zLjA2LTIuMTQtMy40NS0yLjg5Ii8+DQogICAgPHJlY3QgY2xhc3M9ImNscy0xIiB4PSIzLjg5IiB5PSI5LjY5IiB3aWR0aD0iMi44MiIgaGVpZ2h0PSIwLjkxIi8+DQogICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjE1LjE2IDEwLjYgMTYuMTEgMTAuNiAxNi4xMSA5LjY5IDE1LjE2IDkuNjkgMTUuMTYgOC43MyAxNC4yNSA4LjczIDE0LjI1IDkuNjkgMTMuMyA5LjY5IDEzLjMgMTAuNiAxNC4yNSAxMC42IDE0LjI1IDExLjU1IDE1LjE2IDExLjU1IDE1LjE2IDEwLjYiLz4NCjwvc3ZnPg==';
 
+const Converter = require('./Converter');
 /**
  * Class for the Arduino block in Scratch 3.0.
  * @constructor
  */
 class Scratch3ArduinoBlocks {
-    constructor () {
+    constructor (runtime) {
+        this.converter = new Converter(runtime);
         this._digitalOutputs = Object.entries(Scratch3ArduinoBlocks.DIGITAL_OUTPUT).map(
             (item, index) => {
                 let label = formatMessage({
                     id: `arduino.digital.${item[0]}`,
-                    default: `${item[0]}`,
+                    default: `${item[0]}`,           
                     description: 'Digital output(HIGH/LOW)'
                 });
                 return { text: label, value: String(item[1]) };
@@ -317,7 +319,6 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         DIGITAL: {
                             type: ArgumentType.NUMBER,
-                            //menu: 'digitalPins',
                             defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D9
                         }
                     }
@@ -327,7 +328,7 @@ class Scratch3ArduinoBlocks {
                     func: 'idle',
                     text: formatMessage({
                         id: 'arduino.readAnalog',
-                        default: 'Read analog pin(A) [ANALOG]',
+                        default: 'Read analog pin [ANALOG]',
                         description: 'Read analog from Pin.'
                     }),
                     blockType: BlockType.REPORTER,
@@ -351,7 +352,6 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            //menu: 'digitalPins',
                             defaultValue: Scratch3ArduinoBlocks.DIGITAL_PIN.D9
                         },
                         OUTPUT: {
@@ -436,7 +436,7 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 9
+                            defaultValue: 1
                         },
                         NOTE: {
                             type: ArgumentType.STRING,
@@ -478,7 +478,7 @@ class Scratch3ArduinoBlocks {
                     arguments: {
                         PIN: {
                             type: ArgumentType.NUMBER,
-                            defaultValue: 9
+                            defaultValue: 1
                         },
                         ANGLE: {
                             type: ArgumentType.ANGLE,
@@ -785,7 +785,9 @@ class Scratch3ArduinoBlocks {
         };
     }
 
+
     idle() {
+
     }
 }
 module.exports = Scratch3ArduinoBlocks;

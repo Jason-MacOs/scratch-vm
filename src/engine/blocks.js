@@ -309,7 +309,9 @@ class Blocks {
         case 'endDrag':
             if (optRuntime) {
                 optRuntime.emitBlockDragUpdate(false /* areBlocksOverGui */);
-
+                const obj = {xml: {outerHTML: this.toXML(this._blocks)}};
+                optRuntime.emitArduinoBlocksUpdate(this);
+                // optRuntime.emitArduinoBlocksUpdate(adapter(obj));
                 // Drag blocks onto another sprite
                 if (e.isOutside) {
                     const newBlocks = adapter(e);

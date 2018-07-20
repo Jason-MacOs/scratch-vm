@@ -396,6 +396,10 @@ class Runtime extends EventEmitter {
         return 'BLOCK_DRAG_END';
     }
 
+    static get ARDUINO_BLOCKS_UPDATE () {
+        return 'ARDUINO_BLOCKS_UPDATE'
+    }
+
     /**
      * Event name for reporting that an extension was added.
      * @const {string}
@@ -1603,6 +1607,10 @@ class Runtime extends EventEmitter {
      */
     emitBlockEndDrag (blocks) {
         this.emit(Runtime.BLOCK_DRAG_END, blocks);
+    }
+
+    emitArduinoBlocksUpdate (blocks) {
+        this.emit(Runtime.ARDUINO_BLOCKS_UPDATE, blocks);
     }
 
     /**
