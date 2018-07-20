@@ -795,7 +795,7 @@ class Runtime extends EventEmitter {
         }
 
         const blockXML = `<block type="${extendedOpcode}">${context.inputList.join('')}</block>`;
-
+        
         return {
             info: context.blockInfo,
             json: context.blockJSON,

@@ -186,14 +186,14 @@ class Scratch3MatrixBlocks {
                     func: 'idle',
                     text: formatMessage({
                         id: 'arduino.matrix.makeGraph',
-                        default: 'Make graphics[GRAPH]',
+                        default: 'Make graphics[MATRIX]',
                         description: 'Make graphics'
                     }),
                     blockType: BlockType.REPORTER,
                     arguments: {
-                        GRAPH: {
-                            type: ArgumentType.STRING,
-                            defaultValue: ''
+                        MATRIX: {
+                            type: ArgumentType.MATRIX,
+                            defaultValue: '0000000001100110111111111111111101111110001111000001100000000000'
                         }
                     }
                 }
