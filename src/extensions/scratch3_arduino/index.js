@@ -756,6 +756,17 @@ class Scratch3ArduinoBlocks {
                             defaultValue: 100
                         }
                     }
+                },
+                {
+                    opcode: 'getKey',
+                    func: 'idle',
+                    text: formatMessage({
+                        id: 'arduino.getKey',
+                        default: 'Keyboard get key',
+                        description: 'Keyboard get key.'
+                    }),
+                    blockType: BlockType.REPORTER,
+                    arguments: { }
                 }
             ],
             menus: {
