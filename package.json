@@ -61,6 +61,7 @@
     "format-message-cli": "5.2.1",
     "gh-pages": "^1.1.0",
     "in-publish": "^2.0.0",
+    "js-beautify": "^1.7.5",
     "json": "^9.0.4",
     "lodash.defaultsdeep": "4.6.0",
     "pngjs": "^3.3.2",
