@@ -35,6 +35,12 @@ class Scratch3MatrixBlocks {
                 });
                 return { text: label, value: String(item[1]) };
             });
+
+        this._chars = Array.from({ length: 127 - 33 }).map(
+            (item, index) => {
+                let chr = String.fromCharCode(index + 33);
+                return { text: chr, value: chr };
+            });
     }
 
     static get BRIGHTNESS() {
@@ -84,7 +90,7 @@ class Scratch3MatrixBlocks {
                     arguments: {
                         GRAPH: {
                             type: ArgumentType.STRING,
-                            defaultValue: '图案'
+                            defaultValue: ''
                         }
                     }
                 },
@@ -100,7 +106,7 @@ class Scratch3MatrixBlocks {
                     arguments: {
                         GRAPH: {
                             type: ArgumentType.STRING,
-                            defaultValue: '图案'
+                            defaultValue: ''
                         },
                         DIRECTION: {
                             type: ArgumentType.NUMBER,
@@ -177,6 +183,7 @@ class Scratch3MatrixBlocks {
                     arguments: {
                         CHAR: {
                             type: ArgumentType.STRING,
+                            menu: 'chars',
                             defaultValue: 'A'
                         }
                     }
@@ -200,7 +207,8 @@ class Scratch3MatrixBlocks {
             ],
             menus: {
                 brightness: this._brightness,
-                direction: this._direction
+                direction: this._direction,
+                chars: this._chars
             }
         };
     }
