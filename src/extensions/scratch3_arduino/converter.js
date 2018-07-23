@@ -1,4 +1,4 @@
-const ArduinoGenerator = require('./Generator');
+const ArduinoGenerator = require('./generator');
 const Blocks = require('../../engine/blocks');
 const jsBeautifier = require('../../util/js-beautify');
 
@@ -15,7 +15,7 @@ class Converter {
         this.runtime.on('ARDUINO_BLOCKS_UPDATE', this.BlockToArduino);
     }
 
-    getArduinoCoade() {
+    getArduinoCode() {
         return this.arduinoCode;
     }
     

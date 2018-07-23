@@ -546,11 +546,11 @@ class Runtime extends EventEmitter {
         };
 
         // clear other extensions in _blockInfo when arduino added
-        if (categoryInfo.id == 'arduino') {
-            this._blockInfo = [categoryInfo];
-        } else {
+        //if (categoryInfo.id == 'arduino') {
+            //this._blockInfo = [categoryInfo];
+        //} else {
             this._blockInfo.push(categoryInfo);
-        }
+        //}
         this._fillExtensionCategory(categoryInfo, extensionInfo);
 
         this.emit(Runtime.EXTENSION_ADDED, categoryInfo.blocks.concat(categoryInfo.menus));
@@ -911,6 +911,10 @@ class Runtime extends EventEmitter {
 
     registerExtensionDevice (extensionId, device) {
         this.extensionDevices[extensionId] = device;
+    }
+
+    getExtensionDevice(extensionId) {
+        return this.extensionDevices[extensionId];
     }
 
     startDeviceScan (extensionId) {
