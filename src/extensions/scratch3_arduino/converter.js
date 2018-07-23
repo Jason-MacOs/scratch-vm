@@ -72,9 +72,8 @@ class Converter {
         this.loopArr = [];
 
         this.ArduinoGenerator = new ArduinoGenerator();
-        this.BasicGenerator = this.ArduinoGenerator.getPrimitives();
-        this.operator = this.ArduinoGenerator.getOperator();
-        this.generatorMap = Object.assign(this.BasicGenerator, this.operator);
+        this.generatorMap = this.ArduinoGenerator.getPrimitives();
+        // this.generatorMap = Object.assign(this.BasicGenerator, this.operator);
 
         for(let key in this.generatorMap) {
             this.generatorMap[key] = this.generatorMap[key].bind(this);

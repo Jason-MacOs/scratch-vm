@@ -36,6 +36,7 @@ class Generator {
             arduino_readGestureSensor: this.arduino_readGestureSensor,
             arduino_setMotorSpeed: this.arduino_setMotorSpeed,
             arduino_set2MotorsSpeed: this.arduino_set2MotorsSpeed,
+            arduino_getKey: this.arduino_getKey,
             control_wait: this.control_wait,
             control_repeat: this.control_repeat,
             control_if: this.control_if,
@@ -43,7 +44,24 @@ class Generator {
             control_repeat_until: this.control_repeat_until,
             control_wait_until: this.control_wait_until,
             control_forever: this.control_forever,
-            arduino_getKey: this.arduino_getKey
+            operator_add: this.add,
+            operator_subtract: this.subtract,
+            operator_multiply: this.multiply,
+            operator_divide: this.divide,
+            operator_lt: this.lt,
+            operator_equals: this.equals,
+            operator_gt: this.gt,
+            operator_and: this.and,
+            operator_or: this.or,
+            operator_not: this.not,
+            operator_random: this.random,
+            operator_join: this.join,
+            operator_letter_of: this.letterOf,
+            operator_length: this.length,
+            operator_contains: this.contains,
+            operator_mod: this.mod,
+            operator_round: this.round,
+            operator_mathop: this.mathop
         }
     }
 
@@ -580,10 +598,6 @@ class Generator {
         return {def, setup, work};
     }
 
-
-
-    /************************* 控制 ***********************************/
-
     control_wait(block, type) {
         const obj = this.getInputsValue(block);
         const delayTime = obj.DURATION;
@@ -697,44 +711,19 @@ class Generator {
         return {loop};
     }
 
-    /******************* 变量 *************************/
-    data_setvariableto(block, type) {
-        const obj = this.getInputsValue(block);
-        const variable = block.fields.VARIABLE.value;
-        const variableType = block.fields.VARIABLE.variableType;
-        const value = obj.VALUE;
-        const str = `${variable} = ${value};`
-        return {[type]: str, variable, variableType};
-    }
+    // data_setvariableto(block, type) {
+    //     const obj = this.getInputsValue(block);
+    //     const variable = block.fields.VARIABLE.value;
+    //     const variableType = block.fields.VARIABLE.variableType;
+    //     const value = obj.VALUE;
+    //     const str = `${variable} = ${value};`
+    //     return {[type]: str, variable, variableType};
+    // }
 
-    /******************** 运算 *****************************/
     /**
      * Retrieve the block primitives implemented by this package.
      * @return {object.<string, Function>} Mapping of opcode to Function.
      */
-    getOperator () {
-        return {
-            operator_add: this.add,
-            operator_subtract: this.subtract,
-            operator_multiply: this.multiply,
-            operator_divide: this.divide,
-            operator_lt: this.lt,
-            operator_equals: this.equals,
-            operator_gt: this.gt,
-            operator_and: this.and,
-            operator_or: this.or,
-            operator_not: this.not,
-            operator_random: this.random,
-            operator_join: this.join,
-            operator_letter_of: this.letterOf,
-            operator_length: this.length,
-            operator_contains: this.contains,
-            operator_mod: this.mod,
-            operator_round: this.round,
-            operator_mathop: this.mathop
-        };
-    }
-
     add (args) {
         return `(${args.NUM1})+(${args.NUM2})`;
     }
