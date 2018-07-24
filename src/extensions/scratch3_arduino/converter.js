@@ -1,4 +1,5 @@
 const ArduinoGenerator = require('./generator');
+const LcdGenerator = require('../scratch3_lcd/generator');
 const Blocks = require('../../engine/blocks');
 const jsBeautifier = require('../../util/js-beautify');
 
@@ -16,6 +17,7 @@ class Converter {
 
     getArduinoCode() {
         const blocks = this.runtime.getEditingTarget().blocks;
+        console.log(blocks)
         this.BlockToArduino(blocks);
         
         return this.arduinoCode;
@@ -70,8 +72,11 @@ class Converter {
         this.loopArr = [];
 
         this.ArduinoGenerator = new ArduinoGenerator();
-        this.generatorMap = this.ArduinoGenerator.getPrimitives();
-        // this.generatorMap = Object.assign(this.BasicGenerator, this.operator);
+        this.LcdGenerator = new LcdGenerator();
+        this.generatorMap = Object.assign(
+            this.ArduinoGenerator.getPrimitives(),
+            this.LcdGenerator.getPrimitives()
+        );
 
         for(let key in this.generatorMap) {
             this.generatorMap[key] = this.generatorMap[key].bind(this);
@@ -80,12 +85,12 @@ class Converter {
     }
 
     getInputsValue(block) {
-        
         const inputs = block.inputs;
         const obj = {};
         for(const key in inputs) {
             const _block = this.blocks.getBlock(inputs[key].block);
-            const opcode = _block.opcode;
+            if(!_block) continue;
+            const opcode =  _block.opcode;
          
             if(this.generatorMap[opcode] && opcode.includes('arduino') && !key.includes('SUBSTACK')) {
                const args = this.getInputsValue(_block);
