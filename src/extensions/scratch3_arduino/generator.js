@@ -328,7 +328,7 @@ class Generator {
         const work = `DateTime dt = DateTime(${YEAR}, ${MONTH}, ${DATE}, ${HOUR}, ${MINUTE});rtc.setDateTime(dt);`
         const setup = `rtc.begin()`;
         
-        return includes, macros, workType, work, setup;
+        return {includes, macros, workType, work, setup};
     }
 
     arduino_setTimeNow(block, type) {
@@ -613,7 +613,7 @@ class Generator {
         const obj = this.getInputsValue(block);
         const queue = [];
         const math_whole_number = obj.TIMES;
-        let substack = block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
+        let substack = block.inputs && block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
         
         queue.push(`\tfor(int i=0;i<${math_whole_number};i++) {`);
 
@@ -631,7 +631,7 @@ class Generator {
         const obj = this.getInputsValue(block);
         const queue = [];
         const condition = obj.CONDITION || false;
-        let substack = block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
+        let substack = block.inputs && block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
         
         queue.push(`if(${condition}){`);
 
@@ -649,8 +649,8 @@ class Generator {
         const obj = this.getInputsValue(block);
         const queue = [];
         const condition = obj.CONDITION || false;
-        let substack = block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
-        let substack2 = block.inputs.SUBSTACK2 && this._blocks[block.inputs.SUBSTACK2.block];
+        let substack = block.inputs && block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
+        let substack2 = block.inputs && block.inputs.SUBSTACK2 && this._blocks[block.inputs.SUBSTACK2.block];
         
         queue.push(`if(${condition}){`);
 
@@ -675,7 +675,7 @@ class Generator {
         const obj = this.getInputsValue(block);
         const queue = [];
         const condition = obj.CONDITION || false;
-        let substack = block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
+        let substack = block.inputs && block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
 
         queue.push(`while(!(${condition})){`);
 
@@ -701,7 +701,7 @@ class Generator {
 
     control_forever(block) {
         let repeat_body = ``;
-        let substack = block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
+        let substack = block.inputs && block.inputs.SUBSTACK && this._blocks[block.inputs.SUBSTACK.block];
 
         while(substack) {
             repeat_body += this.generatorMap[substack.opcode](substack).setup;
