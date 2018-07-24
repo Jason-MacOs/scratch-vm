@@ -34,6 +34,7 @@ class Generator {
             arduino_setTubeDate: this.arduino_setTubeDate,
             arduino_setTubeTime: this.arduino_setTubeTime,
             arduino_readGestureSensor: this.arduino_readGestureSensor,
+            arduino_readRemoteData: this.arduino_readRemoteData,
             arduino_setMotorSpeed: this.arduino_setMotorSpeed,
             arduino_set2MotorsSpeed: this.arduino_set2MotorsSpeed,
             arduino_getKey: this.arduino_getKey,
@@ -192,8 +193,8 @@ class Generator {
         const workType = type;
         const work = `buzzer.tone(${PIN}, ${NOTE}, BEAT_DELAY*${BEAT});delay(BEAT_DELAY*${BEAT});`;
         const pinMode =[{
-            num: `${pin}`,
-            value: `pinMode(${pin}, OUTPUT);`
+            num: `${PIN}`,
+            value: `pinMode(${PIN}, OUTPUT);`
         }];
 
 
@@ -209,8 +210,8 @@ class Generator {
         const workType = type;
         const work = `buzzer.tone(${PIN}, ${NOTE}, BEAT_DELAY*${BEAT});`;
         const pinMode =[{
-            num: `${pin}`,
-            value: `pinMode(${pin}, OUTPUT);`
+            num: `${PIN}`,
+            value: `pinMode(${PIN}, OUTPUT);`
         }];
 
 
@@ -460,8 +461,8 @@ class Generator {
         return {includes}; 
     }
 
-    arduino_readRemoteData(block, type) {
-        const {PIN} = this.getInputsValue(block);
+    arduino_readRemoteData(arg) {
+        const {PIN} = arg;
         const includes = ['IRremote.h'];
         const variables = [{
             name: `irrecv_${PIN}(${PIN})`,

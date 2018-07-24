@@ -24,7 +24,7 @@ class Scratch3ArduinoBlocks {
         this._runtime = runtime;
         this._runtime.registerExtensionDevice(EXT_ID, this);
 
-        this.converter = new Converter(runtime);
+        this.converter = new Converter(this._runtime);
 
         this._digitalOutputs = Object.entries(Scratch3ArduinoBlocks.DIGITAL_OUTPUT).map(
             (item, index) => {

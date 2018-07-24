@@ -99,9 +99,6 @@ class VirtualMachine extends EventEmitter {
         this.runtime.on(Runtime.BLOCK_DRAG_END, blocks => {
             this.emit(Runtime.BLOCK_DRAG_END, blocks);
         });
-        this.runtime.on(Runtime.ARDUINO_BLOCKS_UPDATE, blocks => {
-            this.emit(Runtime.ARDUINO_BLOCKS_UPDATE, blocks);
-        });
         this.runtime.on(Runtime.EXTENSION_ADDED, blocksInfo => {
             this.emit(Runtime.EXTENSION_ADDED, blocksInfo);
         });

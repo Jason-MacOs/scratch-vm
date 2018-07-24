@@ -11,16 +11,22 @@ class Converter {
         this.BlockToArduino = this.BlockToArduino.bind(this);
         this.getInputsValue = this.getInputsValue.bind(this);
         this.blockToArr = this.blockToArr.bind(this);
-        
-        this.runtime.on('ARDUINO_BLOCKS_UPDATE', this.BlockToArduino);
+        this.getArduinoCode = this.getArduinoCode.bind(this)
     }
 
     getArduinoCode() {
-        return this.arduinoCode;
+        const blocks = this.runtime.getEditingTarget().blocks;
+        const self = this;
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                self.BlockToArduino(blocks);
+                resolve(self.arduinoCode);
+            }, 0);
+        });
     }
     
     BlockToArduino(blocks) {
-        setTimeout(() => {
             this.initArduinoCode(blocks);
             this.initCheckout(blocks);
             this.arduinoHandleBlocks();
@@ -36,9 +42,6 @@ class Converter {
             this.handleDef();
             this.handlePinMode();
             this.arduinoCodeUpdate();
-
-            console.log(this.arduinoCode);
-        }, 0);
     }
 
     initArduinoCode(blocks) {
@@ -103,10 +106,10 @@ class Converter {
                 obj[key] = this.generatorMap[opcode](args);
                 continue;
             }
-
             const back = this.blocks._getBlockParams(_block);
             obj[key] = Object.values(back)[0];
         }
+
 
         return obj;
     }
