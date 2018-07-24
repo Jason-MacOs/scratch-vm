@@ -17,7 +17,6 @@ class Converter {
 
     getArduinoCode() {
         const blocks = this.runtime.getEditingTarget().blocks;
-        console.log(blocks)
         this.BlockToArduino(blocks);
         
         return this.arduinoCode;
@@ -99,6 +98,15 @@ class Converter {
                _obj.work = '';
                this.ReportBlockArr.push(_obj);
                continue;
+            }
+
+            if(this.generatorMap[opcode] && opcode === 'data_variable') {
+                const args = this.blocks._getBlockParams(_block);
+                const _obj = this.generatorMap[opcode](args);
+                obj[key] = _obj.work;
+                _obj.work = '';
+                this.variableArr.push(_obj.variable);
+                continue;
             }
 
             if(this.generatorMap.hasOwnProperty(opcode)) {

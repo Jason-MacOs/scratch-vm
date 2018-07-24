@@ -45,6 +45,9 @@ class Generator {
             control_repeat_until: this.control_repeat_until,
             control_wait_until: this.control_wait_until,
             control_forever: this.control_forever,
+            data_variable: this.data_variable,
+            data_setvariableto: this.data_setvariableto,
+            data_changevariableby: this.data_changevariableby,
             operator_add: this.add,
             operator_subtract: this.subtract,
             operator_multiply: this.multiply,
@@ -712,14 +715,33 @@ class Generator {
         return {loop};
     }
 
-    // data_setvariableto(block, type) {
-    //     const obj = this.getInputsValue(block);
-    //     const variable = block.fields.VARIABLE.value;
-    //     const variableType = block.fields.VARIABLE.variableType;
-    //     const value = obj.VALUE;
-    //     const str = `${variable} = ${value};`
-    //     return {[type]: str, variable, variableType};
-    // }
+    data_variable(arg) {
+        console.log(arg)
+        const {VARIABLE} = arg;
+        const variable = {name: `${VARIABLE}`, type: 'double', value: ''};
+        const work = `${VARIABLE}`;
+
+        return {work, variable};
+        
+    }
+
+    data_setvariableto(block, type) {
+        const {VALUE} = this.getInputsValue(block);
+        const {VARIABLE} = this.blocks._getBlockParams(block);
+        const work = `${VARIABLE}=${VALUE};`;
+        const workType = type;
+
+        return {work, workType};
+    }
+
+    data_changevariableby(block, type) {
+        const {VALUE} = this.getInputsValue(block);
+        const {VARIABLE} = this.blocks._getBlockParams(block);
+        const work = `${VARIABLE}+=${VALUE};`;
+        const workType = type;
+
+        return {work, workType};
+    }
 
     /**
      * Retrieve the block primitives implemented by this package.
@@ -815,36 +837,6 @@ class Generator {
         }
         return 0;
     }
-    /************** Arduino API ***************************/
-    digitalWriter(pin, value) {
-        return `digitalWrite(${pin}, ${value});`;
-    }
-
-    pinMode(pin, mode) {
-        return `pinMode(${pin},${mode});`;
-    }
-    
-    analogRead(pin) {
-        return `analogRead(${pin});`;
-    }
-
-    analogWrite(pin, value) {
-        return `analogWrite(${pin}, ${value});`;
-    }
-
-    delay(ms) {
-        return `delay(${ms});`;
-    }
-
-    serialBegin(speed) {
-        return `Serial.begin(${speed});`;
-    }
-
-    serialPrintln(value) {
-        return `Serial.println("${value}");`;
-    }
-
-
 }
 
 module.exports = Generator;
