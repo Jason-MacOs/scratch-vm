@@ -16,14 +16,9 @@ class Converter {
 
     getArduinoCode() {
         const blocks = this.runtime.getEditingTarget().blocks;
-        const self = this;
-
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                self.BlockToArduino(blocks);
-                resolve(self.arduinoCode);
-            }, 0);
-        });
+        this.BlockToArduino(blocks);
+        
+        return this.arduinoCode;
     }
     
     BlockToArduino(blocks) {
